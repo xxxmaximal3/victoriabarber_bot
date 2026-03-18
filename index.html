@@ -47,35 +47,14 @@
     .cal-day.empty { cursor: default; }
     .cal-day .dot { width: 5px; height: 5px; background: #E91E8C; border-radius: 50%; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); }
     .cal-day.selected .dot { background: white; }
-    .cal-day.has-bookings { font-weight: 600; }
-
-    /* Time slots */
     .times-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px; }
     .time-btn { background: white; border: 1px solid #eee; border-radius: 10px; padding: 10px 4px; text-align: center; cursor: pointer; font-size: 13px; color: #222; transition: all 0.12s; position: relative; }
     .time-btn:hover:not(.busy) { border-color: #E91E8C; color: #E91E8C; }
     .time-btn.selected { background: #E91E8C; color: white; border-color: #E91E8C; }
-
-    /* Занято */
-    .time-btn.busy {
-      background: #f9f0f0;
-      border: 1px solid #f5c6c6;
-      color: #ccc;
-      cursor: not-allowed;
-      text-decoration: line-through;
-    }
-    .time-btn.busy::after {
-      content: 'занято';
-      display: block;
-      font-size: 9px;
-      color: #e57373;
-      text-decoration: none;
-      margin-top: 2px;
-      font-weight: 600;
-      letter-spacing: 0.3px;
-    }
+    .time-btn.busy { background: #f9f0f0; border: 1px solid #f5c6c6; color: #ccc; cursor: not-allowed; text-decoration: line-through; }
+    .time-btn.busy::after { content: 'занято'; display: block; font-size: 9px; color: #e57373; text-decoration: none; margin-top: 2px; font-weight: 600; }
     .times-loading { text-align: center; padding: 20px; color: #aaa; font-size: 13px; }
     .times-spinner { width: 20px; height: 20px; border: 2px solid #eee; border-top-color: #E91E8C; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 8px; }
-
     .field-label { font-size: 13px; color: #888; margin-bottom: 6px; }
     .field-input { width: 100%; background: white; border: 1px solid #ddd; border-radius: 10px; padding: 12px 14px; font-size: 15px; color: #222; outline: none; font-family: inherit; }
     .field-input:focus { border-color: #E91E8C; }
@@ -104,27 +83,55 @@
     .existing-title { font-size: 17px; font-weight: 600; color: #222; margin-bottom: 4px; }
     .existing-sub { font-size: 13px; color: #888; margin-bottom: 16px; }
 
-    /* Admin */
+    /* ── ADMIN ── */
     .admin-panel { padding: 0 16px 16px; }
-    .admin-day-section { margin-bottom: 20px; }
-    .admin-day-title { font-size: 13px; font-weight: 600; color: #6c3fc5; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px; padding: 6px 10px; background: #f0eaff; border-radius: 8px; }
-    .admin-booking-card { background: white; border: 1px solid #eee; border-radius: 12px; padding: 14px 16px; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 12px; }
-    .admin-time-badge { background: #6c3fc5; color: white; font-size: 12px; font-weight: 600; border-radius: 8px; padding: 4px 8px; flex-shrink: 0; margin-top: 2px; }
-    .admin-booking-info { flex: 1; }
-    .admin-client-name { font-size: 15px; font-weight: 600; color: #222; }
-    .admin-client-detail { font-size: 13px; color: #888; margin-top: 2px; }
-    .admin-client-phone { font-size: 13px; color: #6c3fc5; margin-top: 3px; font-weight: 500; }
-    .admin-cancel-btn { background: none; border: 1px solid #ffcdd2; color: #e53935; border-radius: 8px; padding: 5px 10px; font-size: 12px; cursor: pointer; font-family: inherit; flex-shrink: 0; }
-    .admin-cancel-btn:hover { background: #ffebee; }
-    .admin-empty { text-align: center; padding: 40px 20px; color: #bbb; font-size: 14px; }
-    .admin-day-filter { display: flex; gap: 8px; overflow-x: auto; padding: 12px 0 4px; scrollbar-width: none; }
-    .admin-day-filter::-webkit-scrollbar { display: none; }
-    .admin-filter-btn { flex-shrink: 0; padding: 7px 14px; border-radius: 20px; border: 1px solid #ddd; background: white; font-size: 13px; cursor: pointer; color: #555; font-family: inherit; }
-    .admin-filter-btn.active { background: #6c3fc5; color: white; border-color: #6c3fc5; }
     .admin-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 16px 0; }
     .admin-stat { background: white; border-radius: 12px; padding: 12px; text-align: center; border: 1px solid #eee; }
     .admin-stat-num { font-size: 22px; font-weight: 700; color: #6c3fc5; }
     .admin-stat-lbl { font-size: 11px; color: #999; margin-top: 2px; }
+
+    /* Master tabs */
+    .master-tabs { display: flex; gap: 0; margin-bottom: 16px; border-radius: 12px; overflow: hidden; border: 1px solid #eee; background: white; }
+    .master-tab { flex: 1; padding: 10px 4px; text-align: center; font-size: 13px; font-weight: 600; cursor: pointer; border: none; background: none; font-family: inherit; color: #888; transition: all 0.15s; border-right: 1px solid #eee; }
+    .master-tab:last-child { border-right: none; }
+    .master-tab.active-katya  { background: #fff0fb; color: #E91E8C; }
+    .master-tab.active-sveta  { background: #f0f4ff; color: #3b5bdb; }
+    .master-tab.active-sergey { background: #f0fff4; color: #2f9e44; }
+    .master-tab.active-all    { background: #f4f0ff; color: #6c3fc5; }
+
+    /* Booking cards with master color */
+    .admin-booking-card { background: white; border-radius: 12px; padding: 14px 16px; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 12px; border-left: 4px solid #eee; border-top: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee; }
+    .admin-booking-card.m-katya  { border-left-color: #E91E8C; }
+    .admin-booking-card.m-sveta  { border-left-color: #3b5bdb; }
+    .admin-booking-card.m-sergey { border-left-color: #2f9e44; }
+
+    .admin-time-badge { color: white; font-size: 12px; font-weight: 600; border-radius: 8px; padding: 4px 8px; flex-shrink: 0; margin-top: 2px; }
+    .m-katya  .admin-time-badge { background: #E91E8C; }
+    .m-sveta  .admin-time-badge { background: #3b5bdb; }
+    .m-sergey .admin-time-badge { background: #2f9e44; }
+
+    .admin-booking-info { flex: 1; }
+    .admin-client-name { font-size: 15px; font-weight: 600; color: #222; }
+    .admin-client-detail { font-size: 13px; color: #888; margin-top: 2px; }
+    .admin-master-pill { display: inline-block; font-size: 11px; font-weight: 600; border-radius: 20px; padding: 2px 8px; margin-top: 4px; }
+    .m-katya  .admin-master-pill { background: #fff0fb; color: #E91E8C; }
+    .m-sveta  .admin-master-pill { background: #f0f4ff; color: #3b5bdb; }
+    .m-sergey .admin-master-pill { background: #f0fff4; color: #2f9e44; }
+    .admin-client-phone { font-size: 13px; color: #555; margin-top: 3px; font-weight: 500; }
+    .admin-cancel-btn { background: none; border: 1px solid #ffcdd2; color: #e53935; border-radius: 8px; padding: 5px 10px; font-size: 12px; cursor: pointer; font-family: inherit; flex-shrink: 0; }
+    .admin-cancel-btn:hover { background: #ffebee; }
+    .admin-empty { text-align: center; padding: 40px 20px; color: #bbb; font-size: 14px; }
+
+    .admin-day-section { margin-bottom: 20px; }
+    .admin-day-title { font-size: 13px; font-weight: 600; color: #6c3fc5; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px; padding: 6px 10px; background: #f0eaff; border-radius: 8px; }
+
+    .admin-day-filter { display: flex; gap: 8px; overflow-x: auto; padding: 4px 0 12px; scrollbar-width: none; }
+    .admin-day-filter::-webkit-scrollbar { display: none; }
+    .admin-filter-btn { flex-shrink: 0; padding: 7px 14px; border-radius: 20px; border: 1px solid #ddd; background: white; font-size: 13px; cursor: pointer; color: #555; font-family: inherit; }
+    .admin-filter-btn.active { background: #6c3fc5; color: white; border-color: #6c3fc5; }
+
+    .cal-day .dot { width: 5px; height: 5px; background: #E91E8C; border-radius: 50%; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); }
+    .cal-day.has-bookings { font-weight: 600; }
   </style>
 </head>
 <body>
@@ -152,7 +159,7 @@
     <div class="loading"><div class="spinner"></div>Загрузка...</div>
   </div>
 
-  <!-- Admin -->
+  <!-- ═══ ADMIN ═══ -->
   <div class="step" id="step-admin">
     <div class="admin-panel">
       <div class="section-label" style="margin-top:16px">Панель владельца</div>
@@ -161,6 +168,8 @@
         <div class="admin-stat"><div class="admin-stat-num" id="stat-week">0</div><div class="admin-stat-lbl">Неделя</div></div>
         <div class="admin-stat"><div class="admin-stat-num" id="stat-total">0</div><div class="admin-stat-lbl">Всего</div></div>
       </div>
+
+      <!-- Calendar -->
       <div class="calendar-wrap" style="margin-bottom:16px">
         <div class="cal-nav">
           <button onclick="adminPrevMonth()">&#8249;</button>
@@ -169,12 +178,23 @@
         </div>
         <div class="cal-grid" id="admin-cal-grid"></div>
       </div>
+
+      <!-- Date filter -->
       <div class="admin-day-filter" id="admin-day-filter"></div>
+
+      <!-- Master color tabs -->
+      <div class="master-tabs">
+        <button class="master-tab active-all" id="tab-all"    onclick="setMasterFilter('all')">Все</button>
+        <button class="master-tab"            id="tab-katya"  onclick="setMasterFilter('Катя')">Катя</button>
+        <button class="master-tab"            id="tab-sveta"  onclick="setMasterFilter('Света')">Света</button>
+        <button class="master-tab"            id="tab-sergey" onclick="setMasterFilter('Сергей')">Сергей</button>
+      </div>
+
       <div id="admin-bookings-list"></div>
     </div>
   </div>
 
-  <!-- Existing -->
+  <!-- ═══ CLIENT ═══ -->
   <div class="step" id="step-existing">
     <div class="existing-wrap">
       <div class="section-label">Ваша запись</div>
@@ -190,14 +210,12 @@
     </div>
   </div>
 
-  <!-- Step 1 -->
   <div class="step" id="step1">
     <div class="section-label">Выберите услугу</div>
     <div id="services-list"></div>
     <button class="btn-main" id="btn1" disabled onclick="goTo(2)">Далее</button>
   </div>
 
-  <!-- Step 2 -->
   <div class="step" id="step2">
     <div class="section-label">Выберите мастера</div>
     <div id="masters-list"></div>
@@ -205,7 +223,6 @@
     <button class="btn-back" onclick="goTo(1)">← Назад</button>
   </div>
 
-  <!-- Step 3 -->
   <div class="step" id="step3">
     <div class="section-label">Выберите дату</div>
     <div class="calendar-wrap">
@@ -217,12 +234,11 @@
       <div class="cal-grid" id="cal-grid"></div>
     </div>
     <div class="section-label" id="time-label" style="display:none">Выберите время</div>
-    <div id="times-grid"></div>
+    <div id="times-wrap"></div>
     <button class="btn-main" id="btn3" disabled onclick="goTo(4)">Далее</button>
     <button class="btn-back" onclick="goTo(2)">← Назад</button>
   </div>
 
-  <!-- Step 4 -->
   <div class="step" id="step4">
     <div class="section-label">Перезвоним для подтверждения записи</div>
     <div class="note-box">Укажите ваше имя и номер телефона — мастер свяжется с вами для подтверждения.</div>
@@ -244,7 +260,6 @@
     <button class="btn-back" onclick="goTo(3)">← Назад</button>
   </div>
 
-  <!-- Step 5 -->
   <div class="step" id="step5">
     <div class="success-wrap">
       <div class="success-icon">
@@ -274,10 +289,13 @@ const services = [
   { id:3, name:'Укладка' }, { id:4, name:'Маникюр' },
 ];
 const masters = [
-  { id:1, name:'Катя',   phone:'+7 915 489 87 08', init:'КА' },
-  { id:2, name:'Света',  phone:'+7 916 489 88 08', init:'СВ' },
-  { id:3, name:'Сергей', phone:'+7 999 123 34 56', init:'СЕ' },
+  { id:1, name:'Катя',   phone:'+7 915 489 87 08', init:'КА', cls:'m-katya'  },
+  { id:2, name:'Света',  phone:'+7 916 489 88 08', init:'СВ', cls:'m-sveta'  },
+  { id:3, name:'Сергей', phone:'+7 999 123 34 56', init:'СЕ', cls:'m-sergey' },
 ];
+// Maps master name → css class
+const masterClass = { 'Катя':'m-katya', 'Света':'m-sveta', 'Сергей':'m-sergey' };
+
 const months    = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
 const monthsGen = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
 const dows      = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
@@ -291,7 +309,7 @@ const allTimes = genTimes();
 
 const now = new Date();
 let state = { service:null, master:null, date:null, time:null, calYear:now.getFullYear(), calMonth:now.getMonth() };
-let adminState = { year:now.getFullYear(), month:now.getMonth(), filteredDate:null, allBookings:[] };
+let adminState = { year:now.getFullYear(), month:now.getMonth(), filteredDate:null, masterFilter:'all', allBookings:[] };
 let tgUser = null;
 let currentBookingId = null;
 
@@ -301,16 +319,12 @@ tgUser = window.Telegram.WebApp.initDataUnsafe?.user || null;
 
 // ── Worker ──────────────────────────────────────────────────
 async function workerTelegram(text) {
-  await fetch(WORKER_URL, {
-    method:'POST', headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({ action:'telegram', text })
-  });
+  await fetch(WORKER_URL, { method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ action:'telegram', text }) });
 }
 async function workerSupabase(path, method='GET', data=null, prefer=null) {
-  const res = await fetch(WORKER_URL, {
-    method:'POST', headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({ action:'supabase', path, body:{ method, data, prefer } })
-  });
+  const res = await fetch(WORKER_URL, { method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ action:'supabase', path, body:{ method, data, prefer } }) });
   if (!res.ok) throw new Error(await res.text());
   const txt = await res.text();
   return txt ? JSON.parse(txt) : null;
@@ -327,8 +341,7 @@ async function init() {
     try {
       const rows = uid ? await workerSupabase(`bookings?user_id=eq.${uid}&select=*`) : [];
       if (rows && rows.length > 0) {
-        const b = rows[0];
-        currentBookingId = b.id;
+        const b = rows[0]; currentBookingId = b.id;
         document.getElementById('ex-service').textContent = b.service;
         document.getElementById('ex-master').textContent  = b.master;
         document.getElementById('ex-dt').textContent      = b.datetime;
@@ -338,54 +351,66 @@ async function init() {
     } catch(e) { startFresh(); }
   }
 }
-
 function startFresh() { renderServices(); showStep('step1'); showProgressBar(); }
 
-// ── Time slots: load busy from DB ───────────────────────────
+// ── Master selection — reset slots when master changes ──────
+function selectMaster(id) {
+  const prev = state.master;
+  state.master = masters.find(m => m.id === id);
+  // If master changed and we already have a date — reload slots
+  if (prev && prev.id !== id && state.date) {
+    state.time = null;
+    // Will reload when user reaches step 3, or reload now if already there
+    const step3 = document.getElementById('step3');
+    if (step3.classList.contains('active')) {
+      reloadTimeSlots();
+    }
+  }
+  renderMasters();
+}
+
+// ── Time slots ───────────────────────────────────────────────
 async function pickDay(d) {
   state.date = new Date(state.calYear, state.calMonth, d);
   state.time = null;
   renderCalendar();
   document.getElementById('time-label').style.display = 'block';
   document.getElementById('btn3').disabled = true;
+  await reloadTimeSlots();
+}
 
-  // Show spinner while loading
-  const grid = document.getElementById('times-grid');
-  grid.className = '';
-  grid.innerHTML = `<div class="times-loading"><div class="times-spinner"></div>Загружаем расписание...</div>`;
-
+async function reloadTimeSlots() {
+  if (!state.date) return;
+  const wrap = document.getElementById('times-wrap');
+  wrap.innerHTML = `<div class="times-loading"><div class="times-spinner"></div>Загружаем расписание...</div>`;
   try {
     const dateStr = fmtDateFull(state.date);
-    // Get all bookings for this date from DB
     const encoded = encodeURIComponent(dateStr);
     const rows = await workerSupabase(`bookings?datetime=like.${encoded}%2C*&select=datetime,master`);
-    // Build set of busy slots: key = "master|time"
     const busySet = new Set();
     (rows || []).forEach(b => {
       const timePart = b.datetime ? b.datetime.split(', ')[1] : null;
       if (timePart) busySet.add(`${b.master}|${timePart}`);
     });
-
     renderTimeSlots(busySet);
   } catch(e) {
-    // On error show all slots as available
     renderTimeSlots(new Set());
   }
 }
 
 function renderTimeSlots(busySet) {
-  const grid = document.getElementById('times-grid');
-  grid.className = 'times-grid';
+  const wrap = document.getElementById('times-wrap');
   const masterName = state.master ? state.master.name : null;
-
+  const grid = document.createElement('div');
+  grid.className = 'times-grid';
   grid.innerHTML = allTimes.map(t => {
-    // A slot is busy if this master already has a booking at this time
     const isBusy = masterName ? busySet.has(`${masterName}|${t}`) : false;
-    if (isBusy) {
-      return `<div class="time-btn busy">${t}</div>`;
-    }
-    return `<div class="time-btn" onclick="selectTime('${t}', this)">${t}</div>`;
+    if (isBusy) return `<div class="time-btn busy">${t}</div>`;
+    const isSel = state.time === t ? 'selected' : '';
+    return `<div class="time-btn ${isSel}" onclick="selectTime('${t}', this)">${t}</div>`;
   }).join('');
+  wrap.innerHTML = '';
+  wrap.appendChild(grid);
 }
 
 function selectTime(t, el) {
@@ -395,7 +420,7 @@ function selectTime(t, el) {
   document.getElementById('btn3').disabled = false;
 }
 
-// ── Submit booking ──────────────────────────────────────────
+// ── Submit ──────────────────────────────────────────────────
 async function submitBooking() {
   document.getElementById('btn4').disabled = true;
   document.getElementById('btn4').textContent = 'Записываем...';
@@ -403,27 +428,19 @@ async function submitBooking() {
   const phone = document.getElementById('inp-phone').value.trim();
   const dtStr = `${fmtDateFull(state.date)}, ${state.time}`;
   const row   = {
-    user_id:  tgUser ? String(tgUser.id) : 'guest_' + Date.now(),
-    name, phone,
-    service:  state.service.name,
-    master:   state.master.name,
-    datetime: dtStr
+    user_id: tgUser ? String(tgUser.id) : 'guest_' + Date.now(),
+    name, phone, service: state.service.name, master: state.master.name, datetime: dtStr
   };
-
-  // Double-check slot still free
   try {
-    const encoded = encodeURIComponent(dtStr);
-    const check = await workerSupabase(`bookings?datetime=eq.${encoded}&master=eq.${encodeURIComponent(state.master.name)}&select=id`);
+    const encDt = encodeURIComponent(dtStr);
+    const encM  = encodeURIComponent(state.master.name);
+    const check = await workerSupabase(`bookings?datetime=eq.${encDt}&master=eq.${encM}&select=id`);
     if (check && check.length > 0) {
-      alert('Это время только что заняли! Пожалуйста, выберите другое.');
+      alert('Это время только что заняли! Выберите другое.');
       document.getElementById('btn4').disabled = false;
       document.getElementById('btn4').textContent = 'Записаться';
-      // Reload slots
-      pickDay(state.date.getDate());
-      goTo(3);
-      return;
+      goTo(3); await reloadTimeSlots(); return;
     }
-
     const result = await workerSupabase('bookings', 'POST', row, 'return=representation');
     currentBookingId = Array.isArray(result) ? result[0]?.id : result?.id;
     await workerTelegram(`📅 Новая запись!\n👤 ${name}\n📞 ${phone}\n✂️ ${state.service.name}\n💇 ${state.master.name}\n🕐 ${dtStr}`);
@@ -448,7 +465,6 @@ async function cancelExisting() {
     currentBookingId = null; startFresh();
   } catch(e) { alert('Ошибка при отмене.'); }
 }
-
 async function cancelBooking() {
   if (!confirm('Отменить запись?')) return;
   try {
@@ -464,14 +480,14 @@ async function cancelBooking() {
   } catch(e) { alert('Ошибка при отмене.'); }
 }
 
-// ── Admin panel ─────────────────────────────────────────────
+// ── ADMIN ───────────────────────────────────────────────────
 async function loadAdminPanel() {
   showStep('step-admin');
   try {
     const rows = await workerSupabase('bookings?select=*&order=created_at.asc');
     adminState.allBookings = rows || [];
     renderAdminStats(); renderAdminCalendar();
-    renderAdminDayFilter(null); renderAdminBookings(null);
+    renderAdminDayFilter(null); renderAdminBookings();
   } catch(e) {
     document.getElementById('admin-bookings-list').innerHTML = '<div class="admin-empty">Ошибка загрузки.</div>';
   }
@@ -485,10 +501,7 @@ function parseDateFromBooking(dt) {
   if (mon < 0 || isNaN(day) || isNaN(year)) return null;
   return new Date(year, mon, day);
 }
-
-function fmtDateFull(d) {
-  return `${d.getDate()} ${monthsGen[d.getMonth()]} ${d.getFullYear()}`;
-}
+function fmtDateFull(d) { return `${d.getDate()} ${monthsGen[d.getMonth()]} ${d.getFullYear()}`; }
 
 function renderAdminStats() {
   const all = adminState.allBookings;
@@ -518,7 +531,8 @@ function renderAdminCalendar() {
   const days = new Date(year, month + 1, 0).getDate();
   const todayStr = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}`;
   const bookedDays = getBookingDates();
-  const selStr = adminState.filteredDate ? `${adminState.filteredDate.getFullYear()}-${adminState.filteredDate.getMonth()}-${adminState.filteredDate.getDate()}` : null;
+  const selStr = adminState.filteredDate
+    ? `${adminState.filteredDate.getFullYear()}-${adminState.filteredDate.getMonth()}-${adminState.filteredDate.getDate()}` : null;
   for (let d = 1; d <= days; d++) {
     const key = `${year}-${month}-${d}`;
     const isSel = key === selStr, isToday = key === todayStr, hasBk = bookedDays.has(key);
@@ -527,25 +541,23 @@ function renderAdminCalendar() {
     grid.innerHTML += `<div class="cal-day ${cls}" onclick="adminPickDay(${d})">${d}${dot}</div>`;
   }
 }
-
 function adminPickDay(d) {
   adminState.filteredDate = new Date(adminState.year, adminState.month, d);
-  renderAdminCalendar(); renderAdminDayFilter(adminState.filteredDate); renderAdminBookings(adminState.filteredDate);
+  renderAdminCalendar(); renderAdminDayFilter(adminState.filteredDate); renderAdminBookings();
 }
-function adminPrevMonth() { if (adminState.month===0){adminState.month=11;adminState.year--;}else adminState.month--; renderAdminCalendar(); }
-function adminNextMonth() { if (adminState.month===11){adminState.month=0;adminState.year++;}else adminState.month++; renderAdminCalendar(); }
+function adminPrevMonth() { if(adminState.month===0){adminState.month=11;adminState.year--;}else adminState.month--; renderAdminCalendar(); }
+function adminNextMonth() { if(adminState.month===11){adminState.month=0;adminState.year++;}else adminState.month++; renderAdminCalendar(); }
 
 function renderAdminDayFilter(activeDate) {
   const dateMap = {};
   adminState.allBookings.forEach(b => {
-    const d = parseDateFromBooking(b.datetime);
-    if (!d) return;
+    const d = parseDateFromBooking(b.datetime); if (!d) return;
     const key = fmtDateFull(d);
     if (!dateMap[key]) dateMap[key] = d;
   });
-  const dates = Object.values(dateMap).sort((a,b) => a-b).slice(0, 14);
+  const dates = Object.values(dateMap).sort((a,b)=>a-b).slice(0,14);
   const el = document.getElementById('admin-day-filter');
-  let html = `<button class="admin-filter-btn ${!activeDate?'active':''}" onclick="adminFilterAll()">Все</button>`;
+  let html = `<button class="admin-filter-btn ${!activeDate?'active':''}" onclick="adminFilterAll()">Все даты</button>`;
   dates.forEach(d => {
     const label = `${d.getDate()} ${monthsGen[d.getMonth()]}`;
     const isActive = activeDate && fmtDateFull(d) === fmtDateFull(activeDate);
@@ -553,22 +565,41 @@ function renderAdminDayFilter(activeDate) {
   });
   el.innerHTML = html;
 }
-
-function adminFilterAll() { adminState.filteredDate = null; renderAdminCalendar(); renderAdminDayFilter(null); renderAdminBookings(null); }
+function adminFilterAll() { adminState.filteredDate = null; renderAdminCalendar(); renderAdminDayFilter(null); renderAdminBookings(); }
 function adminFilterDate(dateStr) {
-  const parts = dateStr.split(' ');
-  adminState.filteredDate = new Date(parseInt(parts[2]), monthsGen.indexOf(parts[1]), parseInt(parts[0]));
-  renderAdminCalendar(); renderAdminDayFilter(adminState.filteredDate); renderAdminBookings(adminState.filteredDate);
+  const p = dateStr.split(' ');
+  adminState.filteredDate = new Date(parseInt(p[2]), monthsGen.indexOf(p[1]), parseInt(p[0]));
+  renderAdminCalendar(); renderAdminDayFilter(adminState.filteredDate); renderAdminBookings();
 }
 
-function renderAdminBookings(filterDate) {
+// Master filter tabs
+function setMasterFilter(master) {
+  adminState.masterFilter = master;
+  // Update tab styles
+  document.getElementById('tab-all').className    = 'master-tab' + (master==='all'    ? ' active-all'    : '');
+  document.getElementById('tab-katya').className  = 'master-tab' + (master==='Катя'   ? ' active-katya'  : '');
+  document.getElementById('tab-sveta').className  = 'master-tab' + (master==='Света'  ? ' active-sveta'  : '');
+  document.getElementById('tab-sergey').className = 'master-tab' + (master==='Сергей' ? ' active-sergey' : '');
+  renderAdminBookings();
+}
+
+function renderAdminBookings() {
   const el = document.getElementById('admin-bookings-list');
   let bookings = adminState.allBookings;
-  if (filterDate) {
-    const ds = fmtDateFull(filterDate);
+
+  // Filter by date
+  if (adminState.filteredDate) {
+    const ds = fmtDateFull(adminState.filteredDate);
     bookings = bookings.filter(b => b.datetime && b.datetime.startsWith(ds));
   }
+  // Filter by master
+  if (adminState.masterFilter !== 'all') {
+    bookings = bookings.filter(b => b.master === adminState.masterFilter);
+  }
+
   if (bookings.length === 0) { el.innerHTML = '<div class="admin-empty">Записей нет</div>'; return; }
+
+  // Group by date
   const grouped = {};
   bookings.forEach(b => {
     const key = b.datetime ? b.datetime.split(',')[0].trim() : 'Без даты';
@@ -579,17 +610,21 @@ function renderAdminBookings(filterDate) {
     const da = parseDateFromBooking(a+', 0:00'), db = parseDateFromBooking(b+', 0:00');
     return (!da||!db) ? 0 : da-db;
   });
+
   let html = '';
   sortedKeys.forEach(dateKey => {
     const sorted = grouped[dateKey].sort((a,b) => (a.datetime||'').localeCompare(b.datetime||''));
     html += `<div class="admin-day-section"><div class="admin-day-title">${dateKey}</div>`;
     sorted.forEach(b => {
       const time = b.datetime ? (b.datetime.split(', ')[1]||'—') : '—';
-      html += `<div class="admin-booking-card" id="bcard-${b.id}">
+      const mCls = masterClass[b.master] || '';
+      html += `
+      <div class="admin-booking-card ${mCls}" id="bcard-${b.id}">
         <div class="admin-time-badge">${time}</div>
         <div class="admin-booking-info">
           <div class="admin-client-name">${b.name||'Без имени'}</div>
-          <div class="admin-client-detail">${b.service||'—'} · ${b.master||'—'}</div>
+          <div class="admin-client-detail">${b.service||'—'}</div>
+          <span class="admin-master-pill">${b.master||'—'}</span>
           <div class="admin-client-phone">${b.phone||'—'}</div>
         </div>
         <button class="admin-cancel-btn" onclick="adminCancelBooking('${b.id}','${(b.name||'').replace(/'/g,"\\'")}')">Отменить</button>
@@ -606,23 +641,24 @@ async function adminCancelBooking(id, name) {
     await workerSupabase(`bookings?id=eq.${id}`, 'DELETE');
     await workerTelegram(`❌ Запись отменена администратором\n👤 ${name}`);
     adminState.allBookings = adminState.allBookings.filter(b => b.id !== id);
-    renderAdminStats(); renderAdminCalendar(); renderAdminDayFilter(adminState.filteredDate); renderAdminBookings(adminState.filteredDate);
+    renderAdminStats(); renderAdminCalendar(); renderAdminDayFilter(adminState.filteredDate); renderAdminBookings();
   } catch(e) { alert('Ошибка при отмене.'); }
 }
 
-// ── UI helpers ──────────────────────────────────────────────
+// ── UI ───────────────────────────────────────────────────────
 function showStep(id) { document.querySelectorAll('.step').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
-function showProgressBar() { document.getElementById('progress').style.display = 'flex'; }
+function showProgressBar() { document.getElementById('progress').style.display='flex'; }
 function goTo(step) {
   showStep('step'+step); showProgressBar();
-  for (let i=1;i<=5;i++) {
+  for(let i=1;i<=5;i++){
     const el=document.getElementById('p'+i); if(!el) continue;
     if(i<step) el.className='progress-step done';
     else if(i===step) el.className='progress-step active';
     else el.className='progress-step';
   }
+  // When entering step 3, reload slots if master+date already set
+  if(step===3){ renderCalendar(); if(state.date) reloadTimeSlots(); }
   if(step===2) renderMasters();
-  if(step===3) renderCalendar();
   if(step===4) updateSummary();
   window.scrollTo(0,0);
 }
@@ -632,13 +668,12 @@ function renderServices() {
   document.getElementById('btn1').disabled=!state.service;
 }
 function selectService(id){state.service=services.find(s=>s.id===id);renderServices();}
-function renderMasters() {
+function renderMasters(){
   const el=document.getElementById('masters-list');
   el.innerHTML=masters.map(m=>`<div class="master-card ${state.master?.id===m.id?'selected':''}" onclick="selectMaster(${m.id})"><div class="avatar">${m.init}</div><div class="master-info"><div class="master-name">${m.name}</div><div class="master-phone">${m.phone}</div></div><div class="check" style="margin-left:auto"></div></div>`).join('');
   document.getElementById('btn2').disabled=!state.master;
 }
-function selectMaster(id){state.master=masters.find(m=>m.id===id);renderMasters();}
-function renderCalendar() {
+function renderCalendar(){
   document.getElementById('cal-title').textContent=months[state.calMonth]+' '+state.calYear;
   const grid=document.getElementById('cal-grid');
   grid.innerHTML=dows.map(d=>`<div class="cal-dow">${d}</div>`).join('');
