@@ -50,7 +50,7 @@
     .times-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px; }
     .time-btn { background: white; border: 1px solid #eee; border-radius: 10px; padding: 10px 4px; text-align: center; cursor: pointer; font-size: 13px; color: #222; transition: all 0.12s; position: relative; }
     .time-btn:hover:not(.busy) { border-color: #E91E8C; color: #E91E8C; }
-    .time-btn.selected { background: #E91E8C; color: white; border-color: #E91E8C; }
+    .time-btn.selected { background: #E91E8C; color: white !important; border-color: #E91E8C; }
     .time-btn.busy { background: #f9f0f0; border: 1px solid #f5c6c6; color: #ccc; cursor: not-allowed; text-decoration: line-through; }
     .time-btn.busy::after { content: 'занято'; display: block; font-size: 9px; color: #e57373; text-decoration: none; margin-top: 2px; font-weight: 600; }
     .times-loading { text-align: center; padding: 20px; color: #aaa; font-size: 13px; }
@@ -635,11 +635,10 @@ function renderAdminBookings() {
   let html = '';
   sortedKeys.forEach(dateKey => {
     const sorted = grouped[dateKey].sort((a, b) => {
-      const ta = a.datetime ? a.datetime.split(', ')[1] || '' : '';
-      const tb = b.datetime ? b.datetime.split(', ')[1] || '' : '';
-      // Compare as HH:MM — pad single digit hour so "8:00" < "9:00" < "10:00"
-      const pad = t => { const p = t.split(':'); return p[0].padStart(2,'0') + ':' + (p[1]||'00'); };
-      return pad(ta).localeCompare(pad(tb));
+      const ta = a.datetime ? a.datetime.split(', ')[1] || '00:00' : '00:00';
+      const tb = b.datetime ? b.datetime.split(', ')[1] || '00:00' : '00:00';
+      const toMins = t => { const [h,m] = t.split(':'); return parseInt(h)*60 + parseInt(m||0); };
+      return toMins(ta) - toMins(tb);
     });
     html += `<div class="admin-day-section"><div class="admin-day-title">${dateKey}</div>`;
     sorted.forEach(b => {
