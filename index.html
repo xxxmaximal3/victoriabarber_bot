@@ -48,10 +48,10 @@
     .cal-day .dot { width: 5px; height: 5px; background: #E91E8C; border-radius: 50%; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); }
     .cal-day.selected .dot { background: white; }
     .times-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px; }
-    .time-btn { background: white; border: 1px solid #eee; border-radius: 10px; padding: 10px 4px; text-align: center; cursor: pointer; font-size: 13px; color: #222; transition: all 0.12s; position: relative; }
+    .time-btn { background: white; border: 1px solid #eee; border-radius: 10px; padding: 0; height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; font-size: 13px; color: #222; transition: all 0.12s; }
     .time-btn:hover:not(.busy) { border-color: #E91E8C; color: #E91E8C; }
-    .time-btn.selected { background: #E91E8C; border-color: #E91E8C; }
-    .time-btn.selected, .time-btn.selected * { color: white !important; }
+    .time-btn.selected { background: #E91E8C !important; border-color: #E91E8C !important; }
+    .time-btn.selected, .time-btn.selected * { color: white !important; -webkit-text-fill-color: white !important; }
     .time-btn.busy { background: #f9f0f0; border: 1px solid #f5c6c6; color: #ccc; cursor: not-allowed; text-decoration: line-through; }
     .time-btn.busy::after { content: 'занято'; display: block; font-size: 9px; color: #e57373; text-decoration: none; margin-top: 2px; font-weight: 600; }
     .times-loading { text-align: center; padding: 20px; color: #aaa; font-size: 13px; }
