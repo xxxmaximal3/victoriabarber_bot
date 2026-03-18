@@ -98,15 +98,10 @@
     <div class="progress-step" id="p5"></div>
   </div>
 
-  <!-- Loading -->
   <div class="step active" id="step0">
-    <div class="loading">
-      <div class="spinner"></div>
-      Загрузка...
-    </div>
+    <div class="loading"><div class="spinner"></div>Загрузка...</div>
   </div>
 
-  <!-- Existing booking -->
   <div class="step" id="step-existing">
     <div class="existing-wrap">
       <div class="section-label">Ваша запись</div>
@@ -122,14 +117,12 @@
     </div>
   </div>
 
-  <!-- Step 1: Services -->
   <div class="step" id="step1">
     <div class="section-label">Выберите услугу</div>
     <div id="services-list"></div>
     <button class="btn-main" id="btn1" disabled onclick="goTo(2)">Далее</button>
   </div>
 
-  <!-- Step 2: Master -->
   <div class="step" id="step2">
     <div class="section-label">Выберите мастера</div>
     <div id="masters-list"></div>
@@ -137,7 +130,6 @@
     <button class="btn-back" onclick="goTo(1)">← Назад</button>
   </div>
 
-  <!-- Step 3: Calendar + Time -->
   <div class="step" id="step3">
     <div class="section-label">Выберите дату</div>
     <div class="calendar-wrap">
@@ -154,7 +146,6 @@
     <button class="btn-back" onclick="goTo(2)">← Назад</button>
   </div>
 
-  <!-- Step 4: Contact -->
   <div class="step" id="step4">
     <div class="section-label">Перезвоним для подтверждения записи</div>
     <div class="note-box">Укажите ваше имя и номер телефона — мастер свяжется с вами для подтверждения.</div>
@@ -176,7 +167,6 @@
     <button class="btn-back" onclick="goTo(3)">← Назад</button>
   </div>
 
-  <!-- Step 5: Success -->
   <div class="step" id="step5">
     <div class="success-wrap">
       <div class="success-icon">
@@ -198,14 +188,9 @@
 </div>
 
 <script>
-// ============================================================
-// НАСТРОЙКИ — замените своими данными
-// ============================================================
-const SUPABASE_URL = 'https://XXXXXXXXXXXXXXXX.supabase.co';
-const SUPABASE_KEY = 'ВАШ_ANON_KEY_ИЗ_SUPABASE';
-const BOT_TOKEN    = 'ВАШ_TELEGRAM_BOT_TOKEN';
-const ADMIN_CHAT_ID = 'CHAT_ID_МАМЫ'; // узнать через @userinfobot
-// ============================================================
+// ── Адрес твоего Cloudflare Worker ──────────────────────────
+const WORKER_URL = 'https://silent-lake-9d6f.xxxmaximal3.workers.dev/';
+// ────────────────────────────────────────────────────────────
 
 const services = [
   { id: 1, name: 'Стрижка' },
@@ -218,114 +203,119 @@ const masters = [
   { id: 2, name: 'Света',  phone: '+7 916 489 88 08', init: 'СВ' },
   { id: 3, name: 'Сергей', phone: '+7 999 123 34 56', init: 'СЕ' },
 ];
-const months = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
-const monthsGen = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
-const dows = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+const months     = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+const monthsGen  = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+const dows       = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
 
 function genTimes() {
   const t = [];
-  for (let h = 8; h <= 18; h++) {
-    t.push(`${h}:00`);
-    if (h < 18) t.push(`${h}:30`);
-  }
+  for (let h = 8; h <= 18; h++) { t.push(`${h}:00`); if (h < 18) t.push(`${h}:30`); }
   t.push('18:30');
   return t;
 }
 const times = genTimes();
 
 const now = new Date();
-let state = {
-  service: null, master: null, date: null, time: null,
-  calYear: now.getFullYear(), calMonth: now.getMonth()
-};
+let state = { service: null, master: null, date: null, time: null, calYear: now.getFullYear(), calMonth: now.getMonth() };
 let tgUser = null;
 let currentBookingId = null;
 
-// --- Telegram WebApp init ---
 window.Telegram.WebApp.ready();
 window.Telegram.WebApp.expand();
 tgUser = window.Telegram.WebApp.initDataUnsafe?.user || null;
 
-// --- Supabase helpers ---
-async function sbFetch(path, method = 'GET', body = null) {
-  const opts = {
-    method,
-    headers: {
-      'apikey': SUPABASE_KEY,
-      'Authorization': 'Bearer ' + SUPABASE_KEY,
-      'Content-Type': 'application/json',
-      'Prefer': method === 'POST' ? 'return=representation' : ''
-    }
-  };
-  if (body) opts.body = JSON.stringify(body);
-  const r = await fetch(SUPABASE_URL + '/rest/v1/' + path, opts);
-  if (!r.ok) throw new Error(await r.text());
-  const text = await r.text();
-  return text ? JSON.parse(text) : null;
+// ── Worker helpers ───────────────────────────────────────────
+
+async function workerTelegram(text) {
+  await fetch(WORKER_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action: 'telegram', text })
+  });
 }
 
+async function workerSupabase(path, method = 'GET', data = null, prefer = null) {
+  const payload = { action: 'supabase', path, body: { method, data, prefer } };
+  const res = await fetch(WORKER_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) throw new Error(await res.text());
+  const txt = await res.text();
+  return txt ? JSON.parse(txt) : null;
+}
+
+// ── Booking logic ────────────────────────────────────────────
+
 async function checkExistingBooking() {
-  if (!tgUser) { showStep('step1'); showProgressBar(); return; }
+  if (!tgUser) { startFresh(); return; }
   try {
-    const rows = await sbFetch(`bookings?user_id=eq.${tgUser.id}&select=*`);
+    const rows = await workerSupabase(`bookings?user_id=eq.${tgUser.id}&select=*`);
     if (rows && rows.length > 0) {
       const b = rows[0];
       currentBookingId = b.id;
       document.getElementById('ex-service').textContent = b.service;
-      document.getElementById('ex-master').textContent = b.master;
-      document.getElementById('ex-dt').textContent = b.datetime;
-      document.getElementById('ex-phone').textContent = b.phone;
+      document.getElementById('ex-master').textContent  = b.master;
+      document.getElementById('ex-dt').textContent      = b.datetime;
+      document.getElementById('ex-phone').textContent   = b.phone;
       showStep('step-existing');
     } else {
-      showStep('step1');
-      showProgressBar();
-      renderServices();
+      startFresh();
     }
   } catch(e) {
-    showStep('step1');
-    showProgressBar();
-    renderServices();
+    startFresh();
   }
+}
+
+function startFresh() {
+  renderServices();
+  showStep('step1');
+  showProgressBar();
 }
 
 async function cancelExisting() {
   if (!confirm('Отменить запись?')) return;
   try {
-    await sbFetch(`bookings?id=eq.${currentBookingId}`, 'DELETE');
-    await sendTelegram(`❌ Запись отменена!\n👤 ${document.getElementById('ex-service').textContent}\nМастер: ${document.getElementById('ex-master').textContent}\n🕐 ${document.getElementById('ex-dt').textContent}`);
+    await workerSupabase(`bookings?id=eq.${currentBookingId}`, 'DELETE');
+    const svc = document.getElementById('ex-service').textContent;
+    const mst = document.getElementById('ex-master').textContent;
+    const dt  = document.getElementById('ex-dt').textContent;
+    await workerTelegram(`❌ Запись отменена!\n✂️ ${svc}\n💇 Мастер: ${mst}\n🕐 ${dt}`);
     currentBookingId = null;
-    showStep('step1');
-    showProgressBar();
-    renderServices();
+    startFresh();
   } catch(e) {
     alert('Ошибка при отмене. Попробуйте снова.');
   }
 }
 
 async function submitBooking() {
-  const name = document.getElementById('inp-name').value.trim();
+  document.getElementById('btn4').disabled = true;
+  document.getElementById('btn4').textContent = 'Записываем...';
+  const name  = document.getElementById('inp-name').value.trim();
   const phone = document.getElementById('inp-phone').value.trim();
-  const d = state.date;
+  const d     = state.date;
   const dtStr = `${d.getDate()} ${monthsGen[d.getMonth()]} ${d.getFullYear()}, ${state.time}`;
-  const row = {
-    user_id: tgUser ? String(tgUser.id) : 'guest_' + Date.now(),
+  const row   = {
+    user_id:  tgUser ? String(tgUser.id) : 'guest_' + Date.now(),
     name, phone,
-    service: state.service.name,
-    master: state.master.name,
+    service:  state.service.name,
+    master:   state.master.name,
     datetime: dtStr
   };
   try {
-    const result = await sbFetch('bookings', 'POST', row);
-    currentBookingId = result[0]?.id;
-    const msg = `📅 Новая запись!\n👤 ${name}\n📞 ${phone}\n✂️ ${state.service.name}\n💇 Мастер: ${state.master.name}\n🕐 ${dtStr}`;
-    await sendTelegram(msg);
+    const result = await workerSupabase('bookings', 'POST', row, 'return=representation');
+    currentBookingId = Array.isArray(result) ? result[0]?.id : result?.id;
+    await workerTelegram(`📅 Новая запись!\n👤 ${name}\n📞 ${phone}\n✂️ ${state.service.name}\n💇 Мастер: ${state.master.name}\n🕐 ${dtStr}`);
     document.getElementById('cf-service').textContent = state.service.name;
-    document.getElementById('cf-master').textContent = state.master.name;
-    document.getElementById('cf-dt').textContent = dtStr;
-    document.getElementById('cf-phone').textContent = phone;
+    document.getElementById('cf-master').textContent  = state.master.name;
+    document.getElementById('cf-dt').textContent      = dtStr;
+    document.getElementById('cf-phone').textContent   = phone;
     goTo(5);
   } catch(e) {
     alert('Ошибка при записи. Попробуйте снова.');
+    document.getElementById('btn4').disabled = false;
+    document.getElementById('btn4').textContent = 'Записаться';
   }
 }
 
@@ -333,12 +323,12 @@ async function cancelBooking() {
   if (!confirm('Отменить запись?')) return;
   try {
     if (currentBookingId) {
-      await sbFetch(`bookings?id=eq.${currentBookingId}`, 'DELETE');
-      await sendTelegram(`❌ Запись отменена!\nМастер: ${document.getElementById('cf-master').textContent}\n🕐 ${document.getElementById('cf-dt').textContent}`);
+      await workerSupabase(`bookings?id=eq.${currentBookingId}`, 'DELETE');
+      await workerTelegram(`❌ Запись отменена!\n✂️ ${document.getElementById('cf-service').textContent}\n💇 Мастер: ${document.getElementById('cf-master').textContent}\n🕐 ${document.getElementById('cf-dt').textContent}`);
     }
     currentBookingId = null;
     state = { service: null, master: null, date: null, time: null, calYear: now.getFullYear(), calMonth: now.getMonth() };
-    document.getElementById('inp-name').value = '';
+    document.getElementById('inp-name').value  = '';
     document.getElementById('inp-phone').value = '';
     renderServices();
     goTo(1);
@@ -347,15 +337,8 @@ async function cancelBooking() {
   }
 }
 
-async function sendTelegram(text) {
-  await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ chat_id: ADMIN_CHAT_ID, text })
-  });
-}
+// ── UI helpers ───────────────────────────────────────────────
 
-// --- UI helpers ---
 function showStep(id) {
   document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -371,9 +354,9 @@ function goTo(step) {
   for (let i = 1; i <= 5; i++) {
     const el = document.getElementById('p' + i);
     if (!el) continue;
-    if (i < step) el.className = 'progress-step done';
+    if (i < step)      el.className = 'progress-step done';
     else if (i === step) el.className = 'progress-step active';
-    else el.className = 'progress-step';
+    else               el.className = 'progress-step';
   }
   if (step === 2) renderMasters();
   if (step === 3) renderCalendar();
@@ -384,7 +367,7 @@ function goTo(step) {
 function renderServices() {
   const el = document.getElementById('services-list');
   el.innerHTML = services.map(s => `
-    <div class="service-card ${state.service && state.service.id===s.id?'selected':''}" onclick="selectService(${s.id})">
+    <div class="service-card ${state.service?.id===s.id?'selected':''}" onclick="selectService(${s.id})">
       <div class="check"></div>
       <div class="service-name">${s.name}</div>
     </div>`).join('');
@@ -399,7 +382,7 @@ function selectService(id) {
 function renderMasters() {
   const el = document.getElementById('masters-list');
   el.innerHTML = masters.map(m => `
-    <div class="master-card ${state.master && state.master.id===m.id?'selected':''}" onclick="selectMaster(${m.id})">
+    <div class="master-card ${state.master?.id===m.id?'selected':''}" onclick="selectMaster(${m.id})">
       <div class="avatar">${m.init}</div>
       <div class="master-info">
         <div class="master-name">${m.name}</div>
@@ -422,16 +405,14 @@ function renderCalendar() {
   let dow = new Date(state.calYear, state.calMonth, 1).getDay();
   dow = dow === 0 ? 6 : dow - 1;
   for (let i = 0; i < dow; i++) grid.innerHTML += `<div class="cal-day empty"></div>`;
-  const days = new Date(state.calYear, state.calMonth + 1, 0).getDate();
-  const todayStr = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}`;
+  const days      = new Date(state.calYear, state.calMonth + 1, 0).getDate();
+  const todayStr  = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}`;
   for (let d = 1; d <= days; d++) {
-    const date = new Date(state.calYear, state.calMonth, d);
-    const past = date < new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const date   = new Date(state.calYear, state.calMonth, d);
+    const past   = date < new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const selStr = state.date ? `${state.date.getFullYear()}-${state.date.getMonth()}-${state.date.getDate()}` : '';
     const dayStr = `${state.calYear}-${state.calMonth}-${d}`;
-    const isToday = dayStr === todayStr;
-    const isSel = selStr === dayStr;
-    const cls = [past?'disabled':'', isToday&&!isSel?'today':'', isSel?'selected':''].filter(Boolean).join(' ');
+    const cls    = [past?'disabled':'', dayStr===todayStr&&dayStr!==selStr?'today':'', dayStr===selStr?'selected':''].filter(Boolean).join(' ');
     grid.innerHTML += `<div class="cal-day ${cls}" onclick="${past?'':'pickDay('+d+')'}">${d}</div>`;
   }
 }
@@ -471,13 +452,12 @@ function checkForm() {
 function updateSummary() {
   if (!state.service || !state.master || !state.date || !state.time) return;
   const d = state.date;
-  const dtStr = `${d.getDate()} ${monthsGen[d.getMonth()]}, ${state.time}`;
   document.getElementById('sum-service').textContent = state.service.name;
-  document.getElementById('sum-master').textContent = state.master.name;
-  document.getElementById('sum-dt').textContent = dtStr;
+  document.getElementById('sum-master').textContent  = state.master.name;
+  document.getElementById('sum-dt').textContent      = `${d.getDate()} ${monthsGen[d.getMonth()]}, ${state.time}`;
 }
 
-// --- Start ---
+// ── Init ─────────────────────────────────────────────────────
 checkExistingBooking();
 </script>
 </body>
