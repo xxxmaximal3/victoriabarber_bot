@@ -159,6 +159,19 @@
     <div class="loading"><div class="spinner"></div>Загрузка...</div>
   </div>
 
+  <!-- No Telegram ID -->
+  <div class="step" id="step-notg">
+    <div style="text-align:center; padding: 60px 24px;">
+      <div style="width:72px;height:72px;background:#fff0f0;border-radius:50%;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <path d="M18 8v12M18 26v2" stroke="#e53935" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div style="font-size:20px;font-weight:700;color:#222;margin-bottom:10px;">Откройте в Telegram</div>
+      <div style="font-size:14px;color:#888;line-height:1.7;">Запись доступна только через Telegram.<br>Откройте приложение через бота<br>и попробуйте снова.</div>
+    </div>
+  </div>
+
   <!-- ═══ ADMIN ═══ -->
   <div class="step" id="step-admin">
     <div class="admin-panel">
@@ -333,6 +346,7 @@ async function workerSupabase(path, method='GET', data=null, prefer=null) {
 // ── Init ────────────────────────────────────────────────────
 async function init() {
   const uid = tgUser ? String(tgUser.id) : null;
+  if (!uid) { showStep('step-notg'); return; }
   if (uid === OWNER_ID) {
     document.getElementById('main-header').classList.add('admin-header');
     document.getElementById('main-header').querySelector('h1').textContent = 'Виктория — Панель';
@@ -351,7 +365,13 @@ async function init() {
     } catch(e) { startFresh(); }
   }
 }
-function startFresh() { renderServices(); showStep('step1'); showProgressBar(); }
+function startFresh() {
+  if (!tgUser) {
+    showStep('step-notg');
+    return;
+  }
+  renderServices(); showStep('step1'); showProgressBar();
+}
 
 // ── Master selection — reset slots when master changes ──────
 function selectMaster(id) {
@@ -422,13 +442,14 @@ function selectTime(t, el) {
 
 // ── Submit ──────────────────────────────────────────────────
 async function submitBooking() {
+  if (!tgUser) { alert('Запись доступна только через Telegram.'); return; }
   document.getElementById('btn4').disabled = true;
   document.getElementById('btn4').textContent = 'Записываем...';
   const name  = document.getElementById('inp-name').value.trim();
   const phone = document.getElementById('inp-phone').value.trim();
   const dtStr = `${fmtDateFull(state.date)}, ${state.time}`;
   const row   = {
-    user_id: tgUser ? String(tgUser.id) : 'guest_' + Date.now(),
+    user_id: tgUser ? String(tgUser.id) : null,
     name, phone, service: state.service.name, master: state.master.name, datetime: dtStr
   };
   try {
@@ -613,7 +634,13 @@ function renderAdminBookings() {
 
   let html = '';
   sortedKeys.forEach(dateKey => {
-    const sorted = grouped[dateKey].sort((a,b) => (a.datetime||'').localeCompare(b.datetime||''));
+    const sorted = grouped[dateKey].sort((a, b) => {
+      const ta = a.datetime ? a.datetime.split(', ')[1] || '' : '';
+      const tb = b.datetime ? b.datetime.split(', ')[1] || '' : '';
+      // Compare as HH:MM — pad single digit hour so "8:00" < "9:00" < "10:00"
+      const pad = t => { const p = t.split(':'); return p[0].padStart(2,'0') + ':' + (p[1]||'00'); };
+      return pad(ta).localeCompare(pad(tb));
+    });
     html += `<div class="admin-day-section"><div class="admin-day-title">${dateKey}</div>`;
     sorted.forEach(b => {
       const time = b.datetime ? (b.datetime.split(', ')[1]||'—') : '—';
