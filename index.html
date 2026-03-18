@@ -9,28 +9,41 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; }
     .app { max-width: 420px; margin: 0 auto; padding: 0 0 2rem; background: #f5f5f5; min-height: 100vh; }
+
+    /* Header */
     .tg-header { background: #E91E8C; padding: 16px 20px 20px; border-radius: 0 0 20px 20px; color: white; }
     .tg-header h1 { font-size: 22px; font-weight: 600; }
     .tg-header .addr { font-size: 12px; opacity: 0.85; margin-top: 4px; display: flex; align-items: center; gap: 5px; }
+    .tg-header.admin-header { background: #6c3fc5; }
+
+    /* Progress */
     .progress-bar { display: flex; gap: 4px; padding: 14px 16px 0; }
     .progress-step { height: 3px; flex: 1; border-radius: 2px; background: #ddd; }
     .progress-step.done { background: #E91E8C; }
     .progress-step.active { background: #f48abd; }
+
+    /* Steps */
     .step { display: none; padding: 0 16px; }
     .step.active { display: block; }
     .section-label { font-size: 11px; font-weight: 600; color: #999; text-transform: uppercase; letter-spacing: 0.8px; margin: 20px 0 10px; }
-    .service-card { background: white; border: 1.5px solid #eee; border-radius: 14px; padding: 14px 16px; margin-bottom: 8px; cursor: pointer; display: flex; align-items: center; gap: 12px; transition: border-color 0.15s; }
+
+    /* Service cards */
+    .service-card { background: white; border: 1.5px solid #eee; border-radius: 14px; padding: 14px 16px; margin-bottom: 8px; cursor: pointer; display: flex; align-items: center; gap: 12px; }
     .service-card.selected { border-color: #E91E8C; background: #fff8fc; }
     .service-card.selected .check { background: #E91E8C; border-color: #E91E8C; }
-    .service-card.selected .check::after { content: ''; display: block; width: 6px; height: 10px; border: 2px solid white; border-top: none; border-left: none; transform: rotate(40deg) translate(1px, -1px); }
+    .service-card.selected .check::after { content: ''; display: block; width: 6px; height: 10px; border: 2px solid white; border-top: none; border-left: none; transform: rotate(40deg) translate(1px,-1px); }
     .check { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid #ddd; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
     .service-name { font-size: 15px; font-weight: 500; color: #222; }
-    .master-card { background: white; border: 1.5px solid #eee; border-radius: 14px; padding: 14px 16px; margin-bottom: 8px; cursor: pointer; display: flex; align-items: center; gap: 12px; transition: border-color 0.15s; }
+
+    /* Master cards */
+    .master-card { background: white; border: 1.5px solid #eee; border-radius: 14px; padding: 14px 16px; margin-bottom: 8px; cursor: pointer; display: flex; align-items: center; gap: 12px; }
     .master-card.selected { border-color: #E91E8C; background: #fff8fc; }
     .avatar { width: 44px; height: 44px; border-radius: 50%; background: #fce4f3; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600; color: #E91E8C; flex-shrink: 0; }
     .master-info { flex: 1; }
     .master-name { font-size: 15px; font-weight: 500; color: #222; }
     .master-phone { font-size: 13px; color: #888; margin-top: 2px; }
+
+    /* Calendar */
     .calendar-wrap { background: white; border: 1px solid #eee; border-radius: 14px; padding: 16px; }
     .cal-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
     .cal-nav button { background: none; border: none; cursor: pointer; font-size: 20px; color: #888; padding: 4px 10px; border-radius: 8px; }
@@ -38,17 +51,26 @@
     .cal-month { font-size: 15px; font-weight: 600; color: #222; }
     .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
     .cal-dow { text-align: center; font-size: 11px; color: #bbb; padding: 4px 0 6px; font-weight: 600; }
-    .cal-day { text-align: center; padding: 8px 2px; font-size: 14px; border-radius: 8px; cursor: pointer; color: #222; }
+    .cal-day { text-align: center; padding: 8px 2px; font-size: 14px; border-radius: 8px; cursor: pointer; color: #222; position: relative; }
     .cal-day:hover:not(.disabled):not(.empty) { background: #fce4f3; color: #E91E8C; }
     .cal-day.selected { background: #E91E8C; color: white; font-weight: 600; }
     .cal-day.today:not(.selected) { font-weight: 700; color: #E91E8C; }
     .cal-day.disabled { color: #ccc; cursor: default; }
     .cal-day.empty { cursor: default; }
+    .cal-day .dot { width: 5px; height: 5px; background: #E91E8C; border-radius: 50%; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); }
+    .cal-day.selected .dot { background: white; }
+
+    /* Admin calendar dot */
+    .cal-day.has-bookings { font-weight: 600; }
+
+    /* Time slots */
     .times-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px; }
     .time-btn { background: white; border: 1px solid #eee; border-radius: 10px; padding: 10px 4px; text-align: center; cursor: pointer; font-size: 13px; color: #222; transition: all 0.12s; }
     .time-btn:hover { border-color: #E91E8C; color: #E91E8C; }
     .time-btn.selected { background: #E91E8C; color: white; border-color: #E91E8C; }
     .time-btn.busy { background: #f5f5f5; color: #ccc; cursor: default; text-decoration: line-through; }
+
+    /* Form */
     .field-label { font-size: 13px; color: #888; margin-bottom: 6px; }
     .field-input { width: 100%; background: white; border: 1px solid #ddd; border-radius: 10px; padding: 12px 14px; font-size: 15px; color: #222; outline: none; font-family: inherit; }
     .field-input:focus { border-color: #E91E8C; }
@@ -58,29 +80,61 @@
     .summary-row { display: flex; justify-content: space-between; font-size: 14px; padding: 5px 0; }
     .summary-row .lbl { color: #888; }
     .summary-row .val { color: #222; font-weight: 500; }
+
+    /* Buttons */
     .btn-main { width: 100%; background: #E91E8C; color: white; border: none; border-radius: 14px; padding: 15px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 8px; font-family: inherit; transition: opacity 0.15s; }
     .btn-main:hover { opacity: 0.9; }
     .btn-main:disabled { opacity: 0.35; cursor: default; }
     .btn-back { background: none; border: none; color: #999; font-size: 14px; cursor: pointer; font-family: inherit; margin: 14px 0 0; display: flex; align-items: center; gap: 4px; }
-    .btn-cancel { width: 100%; background: none; border: 1.5px solid #E91E8C; color: #E91E8C; border-radius: 14px; padding: 13px; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 10px; font-family: inherit; transition: all 0.15s; }
+    .btn-cancel { width: 100%; background: none; border: 1.5px solid #E91E8C; color: #E91E8C; border-radius: 14px; padding: 13px; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 10px; font-family: inherit; }
     .btn-cancel:hover { background: #fff0f8; }
+
+    /* Success */
     .success-wrap { text-align: center; padding: 40px 20px; }
     .success-icon { width: 72px; height: 72px; background: #fce4f3; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; }
     .success-title { font-size: 22px; font-weight: 600; color: #222; margin-bottom: 8px; }
     .success-sub { font-size: 14px; color: #888; line-height: 1.6; }
     .confirm-card { background: white; border: 1px solid #eee; border-radius: 14px; padding: 16px; margin: 20px 0; text-align: left; }
+
+    /* Loading */
     .loading { text-align: center; padding: 60px 20px; color: #888; font-size: 15px; }
     .spinner { width: 36px; height: 36px; border: 3px solid #eee; border-top-color: #E91E8C; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 16px; }
     @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Existing booking */
     .existing-wrap { padding: 20px 16px; }
     .existing-card { background: white; border: 1.5px solid #E91E8C; border-radius: 16px; padding: 20px; margin-bottom: 16px; }
     .existing-title { font-size: 17px; font-weight: 600; color: #222; margin-bottom: 4px; }
     .existing-sub { font-size: 13px; color: #888; margin-bottom: 16px; }
+
+    /* ── ADMIN PANEL ── */
+    .admin-panel { padding: 0 16px 16px; }
+    .admin-day-section { margin-bottom: 20px; }
+    .admin-day-title { font-size: 13px; font-weight: 600; color: #6c3fc5; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px; padding: 6px 10px; background: #f0eaff; border-radius: 8px; }
+    .admin-booking-card { background: white; border: 1px solid #eee; border-radius: 12px; padding: 14px 16px; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 12px; }
+    .admin-time-badge { background: #6c3fc5; color: white; font-size: 12px; font-weight: 600; border-radius: 8px; padding: 4px 8px; flex-shrink: 0; margin-top: 2px; }
+    .admin-booking-info { flex: 1; }
+    .admin-client-name { font-size: 15px; font-weight: 600; color: #222; }
+    .admin-client-detail { font-size: 13px; color: #888; margin-top: 2px; }
+    .admin-client-phone { font-size: 13px; color: #6c3fc5; margin-top: 3px; font-weight: 500; }
+    .admin-cancel-btn { background: none; border: 1px solid #ffcdd2; color: #e53935; border-radius: 8px; padding: 5px 10px; font-size: 12px; cursor: pointer; font-family: inherit; flex-shrink: 0; }
+    .admin-cancel-btn:hover { background: #ffebee; }
+    .admin-empty { text-align: center; padding: 40px 20px; color: #bbb; font-size: 14px; }
+    .admin-day-filter { display: flex; gap: 8px; overflow-x: auto; padding: 12px 0 4px; scrollbar-width: none; }
+    .admin-day-filter::-webkit-scrollbar { display: none; }
+    .admin-filter-btn { flex-shrink: 0; padding: 7px 14px; border-radius: 20px; border: 1px solid #ddd; background: white; font-size: 13px; cursor: pointer; color: #555; font-family: inherit; }
+    .admin-filter-btn.active { background: #6c3fc5; color: white; border-color: #6c3fc5; }
+    .admin-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 16px 0; }
+    .admin-stat { background: white; border-radius: 12px; padding: 12px; text-align: center; border: 1px solid #eee; }
+    .admin-stat-num { font-size: 22px; font-weight: 700; color: #6c3fc5; }
+    .admin-stat-lbl { font-size: 11px; color: #999; margin-top: 2px; }
   </style>
 </head>
 <body>
 <div class="app">
-  <div class="tg-header">
+
+  <!-- Header (client) -->
+  <div class="tg-header" id="main-header">
     <h1>Виктория</h1>
     <div class="addr">
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -90,6 +144,7 @@
       Гаврилова, д 4, пом 1 к. 252 (цоколь)
     </div>
   </div>
+
   <div class="progress-bar" id="progress" style="display:none">
     <div class="progress-step active" id="p1"></div>
     <div class="progress-step" id="p2"></div>
@@ -98,10 +153,46 @@
     <div class="progress-step" id="p5"></div>
   </div>
 
+  <!-- Loading -->
   <div class="step active" id="step0">
     <div class="loading"><div class="spinner"></div>Загрузка...</div>
   </div>
 
+  <!-- ════════════════════════════════════
+       ADMIN PANEL
+  ════════════════════════════════════ -->
+  <div class="step" id="step-admin">
+    <div class="admin-panel">
+      <div class="section-label" style="margin-top:16px">Панель владельца</div>
+
+      <!-- Stats -->
+      <div class="admin-stats">
+        <div class="admin-stat"><div class="admin-stat-num" id="stat-today">0</div><div class="admin-stat-lbl">Сегодня</div></div>
+        <div class="admin-stat"><div class="admin-stat-num" id="stat-week">0</div><div class="admin-stat-lbl">Неделя</div></div>
+        <div class="admin-stat"><div class="admin-stat-num" id="stat-total">0</div><div class="admin-stat-lbl">Всего</div></div>
+      </div>
+
+      <!-- Calendar -->
+      <div class="calendar-wrap" style="margin-bottom:16px">
+        <div class="cal-nav">
+          <button onclick="adminPrevMonth()">&#8249;</button>
+          <span class="cal-month" id="admin-cal-title"></span>
+          <button onclick="adminNextMonth()">&#8250;</button>
+        </div>
+        <div class="cal-grid" id="admin-cal-grid"></div>
+      </div>
+
+      <!-- Day filter tabs -->
+      <div class="admin-day-filter" id="admin-day-filter"></div>
+
+      <!-- Bookings list -->
+      <div id="admin-bookings-list"></div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════
+       CLIENT: existing booking
+  ════════════════════════════════════ -->
   <div class="step" id="step-existing">
     <div class="existing-wrap">
       <div class="section-label">Ваша запись</div>
@@ -117,12 +208,14 @@
     </div>
   </div>
 
+  <!-- Step 1 -->
   <div class="step" id="step1">
     <div class="section-label">Выберите услугу</div>
     <div id="services-list"></div>
     <button class="btn-main" id="btn1" disabled onclick="goTo(2)">Далее</button>
   </div>
 
+  <!-- Step 2 -->
   <div class="step" id="step2">
     <div class="section-label">Выберите мастера</div>
     <div id="masters-list"></div>
@@ -130,6 +223,7 @@
     <button class="btn-back" onclick="goTo(1)">← Назад</button>
   </div>
 
+  <!-- Step 3 -->
   <div class="step" id="step3">
     <div class="section-label">Выберите дату</div>
     <div class="calendar-wrap">
@@ -146,6 +240,7 @@
     <button class="btn-back" onclick="goTo(2)">← Назад</button>
   </div>
 
+  <!-- Step 4 -->
   <div class="step" id="step4">
     <div class="section-label">Перезвоним для подтверждения записи</div>
     <div class="note-box">Укажите ваше имя и номер телефона — мастер свяжется с вами для подтверждения.</div>
@@ -167,6 +262,7 @@
     <button class="btn-back" onclick="goTo(3)">← Назад</button>
   </div>
 
+  <!-- Step 5 -->
   <div class="step" id="step5">
     <div class="success-wrap">
       <div class="success-icon">
@@ -185,38 +281,36 @@
       <button class="btn-cancel" onclick="cancelBooking()">Отменить запись</button>
     </div>
   </div>
-</div>
+
+</div><!-- .app -->
 
 <script>
-// ── Адрес твоего Cloudflare Worker ──────────────────────────
 const WORKER_URL = 'https://silent-lake-9d6f.xxxmaximal3.workers.dev/';
-// ────────────────────────────────────────────────────────────
+const OWNER_ID   = '408254363'; // Telegram ID владельца
 
 const services = [
-  { id: 1, name: 'Стрижка' },
-  { id: 2, name: 'Окрашивание' },
-  { id: 3, name: 'Укладка' },
-  { id: 4, name: 'Маникюр' },
+  { id:1, name:'Стрижка' }, { id:2, name:'Окрашивание' },
+  { id:3, name:'Укладка' }, { id:4, name:'Маникюр' },
 ];
 const masters = [
-  { id: 1, name: 'Катя',   phone: '+7 915 489 87 08', init: 'КА' },
-  { id: 2, name: 'Света',  phone: '+7 916 489 88 08', init: 'СВ' },
-  { id: 3, name: 'Сергей', phone: '+7 999 123 34 56', init: 'СЕ' },
+  { id:1, name:'Катя',   phone:'+7 915 489 87 08', init:'КА' },
+  { id:2, name:'Света',  phone:'+7 916 489 88 08', init:'СВ' },
+  { id:3, name:'Сергей', phone:'+7 999 123 34 56', init:'СЕ' },
 ];
-const months     = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
-const monthsGen  = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
-const dows       = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+const months    = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+const monthsGen = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+const dows      = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
 
 function genTimes() {
   const t = [];
   for (let h = 8; h <= 18; h++) { t.push(`${h}:00`); if (h < 18) t.push(`${h}:30`); }
-  t.push('18:30');
-  return t;
+  t.push('18:30'); return t;
 }
 const times = genTimes();
 
 const now = new Date();
-let state = { service: null, master: null, date: null, time: null, calYear: now.getFullYear(), calMonth: now.getMonth() };
+let state = { service:null, master:null, date:null, time:null, calYear:now.getFullYear(), calMonth:now.getMonth() };
+let adminState = { year:now.getFullYear(), month:now.getMonth(), selectedDate:null, allBookings:[], filteredDate:null };
 let tgUser = null;
 let currentBookingId = null;
 
@@ -224,47 +318,49 @@ window.Telegram.WebApp.ready();
 window.Telegram.WebApp.expand();
 tgUser = window.Telegram.WebApp.initDataUnsafe?.user || null;
 
-// ── Worker helpers ───────────────────────────────────────────
-
+// ── Worker helpers ──────────────────────────────────────────
 async function workerTelegram(text) {
   await fetch(WORKER_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ action: 'telegram', text })
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ action:'telegram', text })
   });
 }
-
-async function workerSupabase(path, method = 'GET', data = null, prefer = null) {
-  const payload = { action: 'supabase', path, body: { method, data, prefer } };
+async function workerSupabase(path, method='GET', data=null, prefer=null) {
   const res = await fetch(WORKER_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ action:'supabase', path, body:{ method, data, prefer } })
   });
   if (!res.ok) throw new Error(await res.text());
   const txt = await res.text();
   return txt ? JSON.parse(txt) : null;
 }
 
-// ── Booking logic ────────────────────────────────────────────
-
-async function checkExistingBooking() {
-  if (!tgUser) { startFresh(); return; }
-  try {
-    const rows = await workerSupabase(`bookings?user_id=eq.${tgUser.id}&select=*`);
-    if (rows && rows.length > 0) {
-      const b = rows[0];
-      currentBookingId = b.id;
-      document.getElementById('ex-service').textContent = b.service;
-      document.getElementById('ex-master').textContent  = b.master;
-      document.getElementById('ex-dt').textContent      = b.datetime;
-      document.getElementById('ex-phone').textContent   = b.phone;
-      showStep('step-existing');
-    } else {
-      startFresh();
-    }
-  } catch(e) {
-    startFresh();
+// ── Init ────────────────────────────────────────────────────
+async function init() {
+  const uid = tgUser ? String(tgUser.id) : null;
+  if (uid === OWNER_ID) {
+    // Admin mode
+    document.getElementById('main-header').classList.add('admin-header');
+    document.getElementById('main-header').querySelector('h1').textContent = 'Виктория — Панель';
+    await loadAdminPanel();
+  } else {
+    // Client mode
+    try {
+      const rows = uid
+        ? await workerSupabase(`bookings?user_id=eq.${uid}&select=*`)
+        : [];
+      if (rows && rows.length > 0) {
+        const b = rows[0];
+        currentBookingId = b.id;
+        document.getElementById('ex-service').textContent = b.service;
+        document.getElementById('ex-master').textContent  = b.master;
+        document.getElementById('ex-dt').textContent      = b.datetime;
+        document.getElementById('ex-phone').textContent   = b.phone;
+        showStep('step-existing');
+      } else {
+        startFresh();
+      }
+    } catch(e) { startFresh(); }
   }
 }
 
@@ -274,19 +370,242 @@ function startFresh() {
   showProgressBar();
 }
 
+// ══════════════════════════════════════════════════════════════
+//  ADMIN PANEL
+// ══════════════════════════════════════════════════════════════
+async function loadAdminPanel() {
+  showStep('step-admin');
+  try {
+    const rows = await workerSupabase('bookings?select=*&order=created_at.asc');
+    adminState.allBookings = rows || [];
+    renderAdminStats();
+    renderAdminCalendar();
+    renderAdminDayFilter(null);
+    renderAdminBookings(null);
+  } catch(e) {
+    document.getElementById('admin-bookings-list').innerHTML =
+      '<div class="admin-empty">Ошибка загрузки. Проверьте соединение.</div>';
+  }
+}
+
+function renderAdminStats() {
+  const all = adminState.allBookings;
+  const todayStr = fmtDate(now);
+  const weekAgo  = new Date(now); weekAgo.setDate(now.getDate() - 7);
+
+  const todayCount = all.filter(b => b.datetime && b.datetime.startsWith(todayStr)).length;
+  const weekCount  = all.filter(b => {
+    const d = parseDateFromBooking(b.datetime);
+    return d && d >= weekAgo && d <= now;
+  }).length;
+
+  document.getElementById('stat-today').textContent = todayCount;
+  document.getElementById('stat-week').textContent  = weekCount;
+  document.getElementById('stat-total').textContent = all.length;
+}
+
+function parseDateFromBooking(dt) {
+  if (!dt) return null;
+  // format: "15 марта 2025, 10:00"
+  const parts = dt.split(',')[0].trim().split(' ');
+  if (parts.length < 3) return null;
+  const day  = parseInt(parts[0]);
+  const mon  = monthsGen.indexOf(parts[1]);
+  const year = parseInt(parts[2]);
+  if (mon < 0 || isNaN(day) || isNaN(year)) return null;
+  return new Date(year, mon, day);
+}
+
+function fmtDate(d) {
+  return `${d.getDate()} ${monthsGen[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+function getBookingsForDate(dateStr) {
+  return adminState.allBookings.filter(b => b.datetime && b.datetime.startsWith(dateStr));
+}
+
+function getBookingDates() {
+  const set = new Set();
+  adminState.allBookings.forEach(b => {
+    const d = parseDateFromBooking(b.datetime);
+    if (d) set.add(`${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`);
+  });
+  return set;
+}
+
+function renderAdminCalendar() {
+  const { year, month } = adminState;
+  document.getElementById('admin-cal-title').textContent = months[month] + ' ' + year;
+  const grid = document.getElementById('admin-cal-grid');
+  grid.innerHTML = dows.map(d => `<div class="cal-dow">${d}</div>`).join('');
+
+  let dow = new Date(year, month, 1).getDay();
+  dow = dow === 0 ? 6 : dow - 1;
+  for (let i = 0; i < dow; i++) grid.innerHTML += `<div class="cal-day empty"></div>`;
+
+  const days       = new Date(year, month + 1, 0).getDate();
+  const todayStr   = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}`;
+  const bookedDays = getBookingDates();
+  const selStr     = adminState.filteredDate
+    ? `${adminState.filteredDate.getFullYear()}-${adminState.filteredDate.getMonth()}-${adminState.filteredDate.getDate()}`
+    : null;
+
+  for (let d = 1; d <= days; d++) {
+    const key     = `${year}-${month}-${d}`;
+    const isToday = key === todayStr;
+    const isSel   = key === selStr;
+    const hasBk   = bookedDays.has(key);
+    const cls     = [
+      isToday && !isSel ? 'today' : '',
+      isSel ? 'selected' : '',
+      hasBk ? 'has-bookings' : ''
+    ].filter(Boolean).join(' ');
+    const dot = hasBk && !isSel ? '<span class="dot"></span>' : '';
+    grid.innerHTML += `<div class="cal-day ${cls}" onclick="adminPickDay(${d})">${d}${dot}</div>`;
+  }
+}
+
+function adminPickDay(d) {
+  adminState.filteredDate = new Date(adminState.year, adminState.month, d);
+  renderAdminCalendar();
+  renderAdminDayFilter(adminState.filteredDate);
+  renderAdminBookings(adminState.filteredDate);
+}
+
+function adminPrevMonth() {
+  if (adminState.month === 0) { adminState.month = 11; adminState.year--; }
+  else adminState.month--;
+  renderAdminCalendar();
+}
+function adminNextMonth() {
+  if (adminState.month === 11) { adminState.month = 0; adminState.year++; }
+  else adminState.month++;
+  renderAdminCalendar();
+}
+
+function renderAdminDayFilter(activeDate) {
+  // Show unique dates that have bookings, nearest 7
+  const dateMap = {};
+  adminState.allBookings.forEach(b => {
+    const d = parseDateFromBooking(b.datetime);
+    if (!d) return;
+    const key = fmtDate(d);
+    if (!dateMap[key]) dateMap[key] = d;
+  });
+  const dates = Object.values(dateMap).sort((a,b) => a-b).slice(0, 14);
+  const el = document.getElementById('admin-day-filter');
+
+  const allActive = !activeDate;
+  let html = `<button class="admin-filter-btn ${allActive?'active':''}" onclick="adminFilterAll()">Все</button>`;
+  dates.forEach(d => {
+    const label = `${d.getDate()} ${monthsGen[d.getMonth()]}`;
+    const isActive = activeDate && fmtDate(d) === fmtDate(activeDate);
+    html += `<button class="admin-filter-btn ${isActive?'active':''}" onclick="adminFilterDate('${fmtDate(d)}')">${label}</button>`;
+  });
+  el.innerHTML = html;
+}
+
+function adminFilterAll() {
+  adminState.filteredDate = null;
+  renderAdminCalendar();
+  renderAdminDayFilter(null);
+  renderAdminBookings(null);
+}
+
+function adminFilterDate(dateStr) {
+  const parts = dateStr.split(' ');
+  const day = parseInt(parts[0]);
+  const mon = monthsGen.indexOf(parts[1]);
+  const year = parseInt(parts[2]);
+  adminState.filteredDate = new Date(year, mon, day);
+  renderAdminCalendar();
+  renderAdminDayFilter(adminState.filteredDate);
+  renderAdminBookings(adminState.filteredDate);
+}
+
+function renderAdminBookings(filterDate) {
+  const el = document.getElementById('admin-bookings-list');
+  let bookings = adminState.allBookings;
+
+  if (filterDate) {
+    const dateStr = fmtDate(filterDate);
+    bookings = bookings.filter(b => b.datetime && b.datetime.startsWith(dateStr));
+  }
+
+  if (bookings.length === 0) {
+    el.innerHTML = '<div class="admin-empty">Записей нет</div>';
+    return;
+  }
+
+  // Group by date
+  const grouped = {};
+  bookings.forEach(b => {
+    const dateKey = b.datetime ? b.datetime.split(',')[0].trim() : 'Без даты';
+    if (!grouped[dateKey]) grouped[dateKey] = [];
+    grouped[dateKey].push(b);
+  });
+
+  // Sort groups by date
+  const sortedKeys = Object.keys(grouped).sort((a, b) => {
+    const da = parseDateFromBooking(a + ', 0:00');
+    const db = parseDateFromBooking(b + ', 0:00');
+    if (!da || !db) return 0;
+    return da - db;
+  });
+
+  let html = '';
+  sortedKeys.forEach(dateKey => {
+    const dayBookings = grouped[dateKey].sort((a, b) => {
+      const ta = a.datetime ? a.datetime.split(', ')[1] || '' : '';
+      const tb = b.datetime ? b.datetime.split(', ')[1] || '' : '';
+      return ta.localeCompare(tb);
+    });
+    html += `<div class="admin-day-section">
+      <div class="admin-day-title">${dateKey}</div>`;
+    dayBookings.forEach(b => {
+      const time = b.datetime ? (b.datetime.split(', ')[1] || '—') : '—';
+      html += `
+      <div class="admin-booking-card" id="bcard-${b.id}">
+        <div class="admin-time-badge">${time}</div>
+        <div class="admin-booking-info">
+          <div class="admin-client-name">${b.name || 'Без имени'}</div>
+          <div class="admin-client-detail">${b.service || '—'} · ${b.master || '—'}</div>
+          <div class="admin-client-phone">${b.phone || '—'}</div>
+        </div>
+        <button class="admin-cancel-btn" onclick="adminCancelBooking('${b.id}', '${(b.name||'').replace(/'/g,"\\'")}')">Отменить</button>
+      </div>`;
+    });
+    html += '</div>';
+  });
+  el.innerHTML = html;
+}
+
+async function adminCancelBooking(id, name) {
+  if (!confirm(`Отменить запись клиента ${name}?`)) return;
+  try {
+    await workerSupabase(`bookings?id=eq.${id}`, 'DELETE');
+    await workerTelegram(`❌ Запись отменена администратором\n👤 Клиент: ${name}`);
+    adminState.allBookings = adminState.allBookings.filter(b => b.id !== id);
+    renderAdminStats();
+    renderAdminCalendar();
+    renderAdminDayFilter(adminState.filteredDate);
+    renderAdminBookings(adminState.filteredDate);
+  } catch(e) {
+    alert('Ошибка при отмене.');
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+//  CLIENT FLOW
+// ══════════════════════════════════════════════════════════════
 async function cancelExisting() {
   if (!confirm('Отменить запись?')) return;
   try {
     await workerSupabase(`bookings?id=eq.${currentBookingId}`, 'DELETE');
-    const svc = document.getElementById('ex-service').textContent;
-    const mst = document.getElementById('ex-master').textContent;
-    const dt  = document.getElementById('ex-dt').textContent;
-    await workerTelegram(`❌ Запись отменена!\n✂️ ${svc}\n💇 Мастер: ${mst}\n🕐 ${dt}`);
+    await workerTelegram(`❌ Клиент отменил запись\n✂️ ${document.getElementById('ex-service').textContent}\n💇 ${document.getElementById('ex-master').textContent}\n🕐 ${document.getElementById('ex-dt').textContent}`);
     currentBookingId = null;
     startFresh();
-  } catch(e) {
-    alert('Ошибка при отмене. Попробуйте снова.');
-  }
+  } catch(e) { alert('Ошибка при отмене.'); }
 }
 
 async function submitBooking() {
@@ -297,7 +616,7 @@ async function submitBooking() {
   const d     = state.date;
   const dtStr = `${d.getDate()} ${monthsGen[d.getMonth()]} ${d.getFullYear()}, ${state.time}`;
   const row   = {
-    user_id:  tgUser ? String(tgUser.id) : 'guest_' + Date.now(),
+    user_id: tgUser ? String(tgUser.id) : 'guest_' + Date.now(),
     name, phone,
     service:  state.service.name,
     master:   state.master.name,
@@ -306,7 +625,7 @@ async function submitBooking() {
   try {
     const result = await workerSupabase('bookings', 'POST', row, 'return=representation');
     currentBookingId = Array.isArray(result) ? result[0]?.id : result?.id;
-    await workerTelegram(`📅 Новая запись!\n👤 ${name}\n📞 ${phone}\n✂️ ${state.service.name}\n💇 Мастер: ${state.master.name}\n🕐 ${dtStr}`);
+    await workerTelegram(`📅 Новая запись!\n👤 ${name}\n📞 ${phone}\n✂️ ${state.service.name}\n💇 ${state.master.name}\n🕐 ${dtStr}`);
     document.getElementById('cf-service').textContent = state.service.name;
     document.getElementById('cf-master').textContent  = state.master.name;
     document.getElementById('cf-dt').textContent      = dtStr;
@@ -324,39 +643,34 @@ async function cancelBooking() {
   try {
     if (currentBookingId) {
       await workerSupabase(`bookings?id=eq.${currentBookingId}`, 'DELETE');
-      await workerTelegram(`❌ Запись отменена!\n✂️ ${document.getElementById('cf-service').textContent}\n💇 Мастер: ${document.getElementById('cf-master').textContent}\n🕐 ${document.getElementById('cf-dt').textContent}`);
+      await workerTelegram(`❌ Клиент отменил запись\n✂️ ${document.getElementById('cf-service').textContent}\n💇 ${document.getElementById('cf-master').textContent}\n🕐 ${document.getElementById('cf-dt').textContent}`);
     }
     currentBookingId = null;
-    state = { service: null, master: null, date: null, time: null, calYear: now.getFullYear(), calMonth: now.getMonth() };
-    document.getElementById('inp-name').value  = '';
+    state = { service:null, master:null, date:null, time:null, calYear:now.getFullYear(), calMonth:now.getMonth() };
+    document.getElementById('inp-name').value = '';
     document.getElementById('inp-phone').value = '';
     renderServices();
     goTo(1);
-  } catch(e) {
-    alert('Ошибка при отмене. Попробуйте снова.');
-  }
+  } catch(e) { alert('Ошибка при отмене.'); }
 }
 
-// ── UI helpers ───────────────────────────────────────────────
-
+// ── UI helpers ──────────────────────────────────────────────
 function showStep(id) {
   document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
-
 function showProgressBar() {
   document.getElementById('progress').style.display = 'flex';
 }
-
 function goTo(step) {
   showStep('step' + step);
   showProgressBar();
   for (let i = 1; i <= 5; i++) {
     const el = document.getElementById('p' + i);
     if (!el) continue;
-    if (i < step)      el.className = 'progress-step done';
+    if (i < step) el.className = 'progress-step done';
     else if (i === step) el.className = 'progress-step active';
-    else               el.className = 'progress-step';
+    else el.className = 'progress-step';
   }
   if (step === 2) renderMasters();
   if (step === 3) renderCalendar();
@@ -368,97 +682,80 @@ function renderServices() {
   const el = document.getElementById('services-list');
   el.innerHTML = services.map(s => `
     <div class="service-card ${state.service?.id===s.id?'selected':''}" onclick="selectService(${s.id})">
-      <div class="check"></div>
-      <div class="service-name">${s.name}</div>
+      <div class="check"></div><div class="service-name">${s.name}</div>
     </div>`).join('');
   document.getElementById('btn1').disabled = !state.service;
 }
-
-function selectService(id) {
-  state.service = services.find(s => s.id === id);
-  renderServices();
-}
+function selectService(id) { state.service = services.find(s=>s.id===id); renderServices(); }
 
 function renderMasters() {
   const el = document.getElementById('masters-list');
   el.innerHTML = masters.map(m => `
     <div class="master-card ${state.master?.id===m.id?'selected':''}" onclick="selectMaster(${m.id})">
       <div class="avatar">${m.init}</div>
-      <div class="master-info">
-        <div class="master-name">${m.name}</div>
-        <div class="master-phone">${m.phone}</div>
-      </div>
+      <div class="master-info"><div class="master-name">${m.name}</div><div class="master-phone">${m.phone}</div></div>
       <div class="check" style="margin-left:auto"></div>
     </div>`).join('');
   document.getElementById('btn2').disabled = !state.master;
 }
-
-function selectMaster(id) {
-  state.master = masters.find(m => m.id === id);
-  renderMasters();
-}
+function selectMaster(id) { state.master = masters.find(m=>m.id===id); renderMasters(); }
 
 function renderCalendar() {
   document.getElementById('cal-title').textContent = months[state.calMonth] + ' ' + state.calYear;
   const grid = document.getElementById('cal-grid');
-  grid.innerHTML = dows.map(d => `<div class="cal-dow">${d}</div>`).join('');
+  grid.innerHTML = dows.map(d=>`<div class="cal-dow">${d}</div>`).join('');
   let dow = new Date(state.calYear, state.calMonth, 1).getDay();
   dow = dow === 0 ? 6 : dow - 1;
-  for (let i = 0; i < dow; i++) grid.innerHTML += `<div class="cal-day empty"></div>`;
-  const days      = new Date(state.calYear, state.calMonth + 1, 0).getDate();
-  const todayStr  = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}`;
-  for (let d = 1; d <= days; d++) {
-    const date   = new Date(state.calYear, state.calMonth, d);
-    const past   = date < new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  for (let i=0; i<dow; i++) grid.innerHTML += `<div class="cal-day empty"></div>`;
+  const days = new Date(state.calYear, state.calMonth+1, 0).getDate();
+  const todayStr = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}`;
+  for (let d=1; d<=days; d++) {
+    const date = new Date(state.calYear, state.calMonth, d);
+    const past = date < new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const selStr = state.date ? `${state.date.getFullYear()}-${state.date.getMonth()}-${state.date.getDate()}` : '';
     const dayStr = `${state.calYear}-${state.calMonth}-${d}`;
-    const cls    = [past?'disabled':'', dayStr===todayStr&&dayStr!==selStr?'today':'', dayStr===selStr?'selected':''].filter(Boolean).join(' ');
+    const cls = [past?'disabled':'', dayStr===todayStr&&dayStr!==selStr?'today':'', dayStr===selStr?'selected':''].filter(Boolean).join(' ');
     grid.innerHTML += `<div class="cal-day ${cls}" onclick="${past?'':'pickDay('+d+')'}">${d}</div>`;
   }
 }
-
 function pickDay(d) {
   state.date = new Date(state.calYear, state.calMonth, d);
   state.time = null;
   renderCalendar();
   document.getElementById('time-label').style.display = 'block';
-  document.getElementById('times-grid').innerHTML = times.map(t =>
+  document.getElementById('times-grid').innerHTML = times.map(t=>
     `<div class="time-btn" onclick="pickTime('${t}')">${t}</div>`).join('');
   document.getElementById('btn3').disabled = true;
 }
-
 function pickTime(t) {
   state.time = t;
-  document.querySelectorAll('.time-btn').forEach(el => el.classList.remove('selected'));
+  document.querySelectorAll('.time-btn').forEach(el=>el.classList.remove('selected'));
   event.target.classList.add('selected');
   document.getElementById('btn3').disabled = false;
 }
-
 function prevMonth() {
-  if (state.calMonth === 0) { state.calMonth = 11; state.calYear--; } else state.calMonth--;
+  if (state.calMonth===0){state.calMonth=11;state.calYear--;}else state.calMonth--;
   renderCalendar();
 }
 function nextMonth() {
-  if (state.calMonth === 11) { state.calMonth = 0; state.calYear++; } else state.calMonth++;
+  if (state.calMonth===11){state.calMonth=0;state.calYear++;}else state.calMonth++;
   renderCalendar();
 }
-
 function checkForm() {
   const n = document.getElementById('inp-name').value.trim();
   const p = document.getElementById('inp-phone').value.trim();
-  document.getElementById('btn4').disabled = !(n.length > 1 && p.length > 5);
+  document.getElementById('btn4').disabled = !(n.length>1 && p.length>5);
 }
-
 function updateSummary() {
-  if (!state.service || !state.master || !state.date || !state.time) return;
+  if (!state.service||!state.master||!state.date||!state.time) return;
   const d = state.date;
   document.getElementById('sum-service').textContent = state.service.name;
   document.getElementById('sum-master').textContent  = state.master.name;
   document.getElementById('sum-dt').textContent      = `${d.getDate()} ${monthsGen[d.getMonth()]}, ${state.time}`;
 }
 
-// ── Init ─────────────────────────────────────────────────────
-checkExistingBooking();
+// ── Start ───────────────────────────────────────────────────
+init();
 </script>
 </body>
 </html>
